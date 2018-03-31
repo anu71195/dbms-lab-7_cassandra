@@ -1,0 +1,13 @@
+DROP KEYSPACE test_demo;
+CREATE KEYSPACE test_demo WITH replication ={'class':'SimpleStrategy','replication_factor':'1'} AND durable_writes=true;
+USE test_demo;
+CREATE TABLE user(
+	name varchar,
+	type varchar,
+	country varchar,
+	style varchar,
+	founded INT,
+	born INT,
+	died INT,
+	PRIMARY KEY(name)
+);
