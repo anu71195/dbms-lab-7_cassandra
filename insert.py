@@ -1,5 +1,8 @@
+import time
+start_time=time.time();
 # from cassandra.cluster import Cluster
 import os
+import re
 # cluster = Cluster()
 # session = cluster.connect()
 # session.execute("DROP KEYSPACE IF EXISTS test;")
@@ -10,38 +13,64 @@ import os
 current_directory=os.getcwd();
 number_of_files=0;
 
-def get_num_attribute_value(i,text):
-	start_index=i;
-	while(text[i]!=','):
-		i+=1;
-	end_index=i
-	quote_count_text=text[start_index:end_index]
-	quote_count_text=quote_count_text.split(":")
-	quote_count_text[1]=int(quote_count_text[1])
-	return quote_count_text,i;
 
-def get_list():
-	
+
+current_file_number=0;	
 for x in os.listdir('./workshop_dataset1'):
-	print(x);
+	current_file_number+=1;
+	print("progress is = ",current_file_number,"/",113,"time=",time.time()-start_time)
+	
 	x='./workshop_dataset1/'+x;
 	fp=open(x,'r');
 	text=fp.read();
-	left_curly=0;
-	for i in range(len(text)):
-		if(text[i]=='{'):
-			left_curly+=1;
-		elif (text[i]=='}'):
-			left_curly-=1;
-		if(text[i:i+14]=="\"quote_count\":"):
-			quote_count_text,i=get_attribute_value(i,text)
-			print(quote_count_text)
-		elif(text[i:i+14]=="\"reply_count\":"):
-			reply_count_text,i=get_num_attribute_value(i,text)
-			print(reply_count_text)
-		elif(text[i:i+11]=="\"hashtags\":"):
-			hash_list=get_list();
-			print(hash_list)
+	left_curly=-1;
+	data=[];
+	# text=text.split("\"quote_count\"");
+	text=text.splitlines();
+	text="".join(text)
+	text=text.split("\"quote_count\":")
+
+	for row_number in range(len(text)):
+		text[row_number]=re.split('"quote_count":|"reply_count":|"hashtags":|"datetime":|"date":|"like_count":|"verified":|"sentiment":|"author":|"location":|"tid":|"retweet_count":|"type":|"media_list":|"quoted_source_id":|"url_list":|"tweet_text":|"author_profile_image":|"author_screen_name":|"author_id":|"lang":|"keywords_processed_list":|"retweet_source_id":|"mentions":|"replyto_source_id":',text[row_number]);
+	
+		if(0):
+			print(x);
+			print(len(text))
+			# print(text)
+			print()
+			print()
+			print()
+		else:
+			if((len(text[row_number])-1)%24):
+				print(x);
+				print(len(text[row_number]))
+
+	for row_number in range(1,len(text)):
+		row=text[row_number];
+		for i in range(len(row)):
+			row[i]=row[i].lstrip().rstrip()[0:-1];
+			if(i==2 or i==13 or i==15 or i==21 or i==23):
+				if(row[i][0]=='[' or row[i][0]=='{'):
+					row[i]=row[i][1:-1].lstrip().rstrip();
+			if(i==2 or i==15):
+				row[i]=row[i].split(',')
+				for sub_row_num in range(len(row[i])):
+					row[i][sub_row_num]=row[i][sub_row_num].lstrip().rstrip();
+			if(i==21):
+				row[i]=row[i].split('",  ')
+				for sub_row_num in range(len(row[i])):
+					row[i][sub_row_num]=row[i][sub_row_num].lstrip().rstrip();
+					print(row[i][sub_row_num][0])
+				# print(row[i])
+
+				# print(row[i].split("             "))
+
+		# print(row)
+		# print();
+		# print()
+
+	# exit();
+	
 	number_of_files+=1;
 
 
@@ -51,3 +80,4 @@ print(number_of_files, " are the number of files");
 # rows=session.execute('SELECT * FROM tweets;')
 # for user_row in rows:
 # 	print(user_row);
+print("time=",time.time()-start_time);
