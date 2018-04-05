@@ -6,14 +6,14 @@ session = Cluster().connect();
 session.execute("DROP KEYSPACE IF EXISTS twitter;")
 session.execute("CREATE KEYSPACE twitter WITH replication ={'class':'SimpleStrategy','replication_factor':'1'} AND durable_writes=true;")
 session.execute('USE twitter;')
-session.execute('CREATE TABLE tweets(tid BIGINT PRIMARY KEY, quote_count INT , reply_count INT, hashtags VARCHAR,date_time TIMESTAMP, date_ VARCHAR,like_count INT,verified BOOLEAN,sentiment INT,author VARCHAR,location VARCHAR,retweet_count INT,type VARCHAR,media_list VARCHAR,quoted_source_id BIGINT,url_list VARCHAR,tweet_text varchar,author_profile_image varchar,author_screen_name varchar,author_id BIGINT,lang varchar,keywords_processed_list VARCHAR,retweet_source_id BIGINT,mentions VARCHAR,replyto_source_id BIGINT);')
-session.execute('CREATE TABLE tweets_1(tid BIGINT ,date_time TIMESTAMP, date_ VARCHAR,author VARCHAR,location VARCHAR,tweet_text varchar,author_screen_name varchar,author_id BIGINT,lang varchar, primary key(author, date_time,tid));')
+session.execute('CREATE TABLE tweets(tid BIGINT PRIMARY KEY, quote_count INT , reply_count INT, hashtags VARCHAR,date_time TIMESTAMP, date_ date,like_count INT,verified BOOLEAN,sentiment INT,author VARCHAR,location VARCHAR,retweet_count INT,type VARCHAR,media_list VARCHAR,quoted_source_id BIGINT,url_list VARCHAR,tweet_text varchar,author_profile_image varchar,author_screen_name varchar,author_id BIGINT,lang varchar,keywords_processed_list VARCHAR,retweet_source_id BIGINT,mentions VARCHAR,replyto_source_id BIGINT);')
+session.execute('CREATE TABLE tweets_1(tid BIGINT ,date_time TIMESTAMP, date_ date,author VARCHAR,location VARCHAR,tweet_text varchar,author_screen_name varchar,author_id BIGINT,lang varchar, primary key(author, date_time,tid));')
 session.execute('CREATE TABLE tweets_2(tid BIGINT, keywords_processed_list VARCHAR , like_count INT , PRIMARY KEY(keywords_processed_list,like_count,tid))')
-session.execute('CREATE TABLE tweets_3(tid BIGINT, hashtag VARCHAR,date_time TIMESTAMP, date_ VARCHAR,PRIMARY KEY(hashtag,date_time,tid))')
-session.execute('CREATE TABLE tweets_4(tid BIGINT, author varchar, mentions VARCHAR , date_time TIMESTAMP, date_ varchar, PRIMARY KEY(author,date_time,tid))')
-session.execute('CREATE TABLE tweets_5(tid BIGINT, date_time TIMESTAMP, date_ varchar, like_count INT,primary key(date_,like_count,tid))')
+session.execute('CREATE TABLE tweets_3(tid BIGINT, hashtag VARCHAR,date_time TIMESTAMP, date_ date,PRIMARY KEY(hashtag,date_time,tid))')
+session.execute('CREATE TABLE tweets_4(tid BIGINT, author varchar, mentions VARCHAR , date_time TIMESTAMP, date_ date, PRIMARY KEY(author,date_time,tid))')
+session.execute('CREATE TABLE tweets_5(tid BIGINT, date_time TIMESTAMP, date_ date, like_count INT,primary key(date_,like_count,tid))')
 session.execute('CREATE TABLE tweets_6(tid BIGINT, location VARCHAR, tweet_text varchar, primary key(location,tid))')
-session.execute('CREATE TABLE tweets_7(tid BIGINT, date_time TIMESTAMP, date_ varchar, hashtags varchar, primary key(date_,tid))')
+session.execute('CREATE TABLE tweets_7(tid BIGINT, date_time TIMESTAMP, date_ date, hashtags varchar, primary key(date_,tid))')
 
 def get_query(query,x,attributes,prime,check):
 	x='./workshop_dataset1/'+x
