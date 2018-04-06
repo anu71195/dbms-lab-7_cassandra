@@ -10,6 +10,6 @@ select tid,like_count from tweets_5 where date_='2017-12-29' order by like_count
 
 select tid, location from tweets_6 where location='DC';
 
-select hashtags from tweets_7 where date_='2017-12-29' limit 20
+select hashtags from tweets_7 where date_='2017-12-29' order by frequency DESC limit 20;
 
 delete from tweets_5 where date_='2017-12-29'
