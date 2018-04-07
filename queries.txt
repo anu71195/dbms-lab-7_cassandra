@@ -2,14 +2,23 @@ select  tid, tweet_text, author_id,location,lang from tweets_1 where author='AJ 
 
 select tid, like_count, keywords_processed_list from tweets_2 where keywords_processed_list='seven ministers' order by like_count DESC;
 
-select tid from tweets_3 where hashtags='netneutrality'order by date_time DESC ;
+select tid from tweets_3 where hashtag='netneutrality'order by date_time DESC ;
 
 select tid from tweets_4 where author='BreakAwayBelize' order by date_time DESC;
 
-select tid,like_count from tweets_5 where date_='2017-12-29' order by like_count DESC;
+select tid,like_count from tweets_5 where date_='2017-12-30' order by like_count DESC;
 
 select tid, location from tweets_6 where location='DC';
 
 select hashtags from tweets_7 where date_='2017-12-29' order by frequency DESC limit 20;
 
 delete from tweets_5 where date_='2017-12-29'
+
+
+
+
+
+
+select location, mentions , frequency from tweets_8 where location = 'New Delhi' order by frequency DESC;
+
+select date_ , location, frequency from tweets_9 where date_='2017-12-30' order by frequency desc;
